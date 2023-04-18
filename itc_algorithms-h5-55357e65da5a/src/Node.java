@@ -132,6 +132,34 @@ public class Node {
       }
    }
 
+   public String toXML() {
+      StringBuilder sb = new StringBuilder();
+      toXMLHelper(this, sb, 1);
+      return sb.toString().trim();
+   }
+
+   private void toXMLHelper(Node node, StringBuilder sb, int depth) {
+      if (node == null) {
+         return;
+      }
+
+      String indent = "    ".repeat(depth - 1);
+      String closingTagIndent = (node.firstChild != null) ? indent : "";
+
+      sb.append(indent).append("<L").append(depth).append("> ").append(node.name).append(" ");
+
+      if (node.firstChild != null) {
+         sb.append("\n");
+         toXMLHelper(node.firstChild, sb, depth + 1);
+         sb.append(indent);
+      }
+
+      sb.append("</L").append(depth).append(">\n");
+
+      if (node.nextSibling != null) {
+         toXMLHelper(node.nextSibling, sb, depth);
+      }
+   }
 
 
    public static void main (String[]param){
@@ -152,6 +180,27 @@ public class Node {
       t = Node.parsePostfix(s);
       v = t.leftParentheticRepresentation();
       System.out.println(s + " ==> " + v); // (((2,1)-,4)*,(69,3)/)+ ==> +(*(-(2,1),4),/(69,3))
+
+       s = "((C)B,(E,F)D,G)A";
+       t = Node.parsePostfix(s);
+       v = t.leftParentheticRepresentation();
+      String xml = t.toXML();
+      System.out.println(s + " ==> " + v); // ((C)B,(E,F)D,G)A ==> A(B(C),D(E,F),G)
+      System.out.println(xml);
+
+      s = "((C)B,(E,G)D,F)A";
+      t = Node.parsePostfix(s);
+      v = t.leftParentheticRepresentation();
+      xml = t.toXML();
+      System.out.println(s + " ==> " + v); // ((C)B,(E,G)D,F)A ==> A(B(C),D(E,G),F)
+      System.out.println(xml);
+
+      s = "B";
+      t = Node.parsePostfix(s);
+      v = t.leftParentheticRepresentation();
+      xml = t.toXML();
+      System.out.println(s + " ==> " + v); // B ==> B
+      System.out.println(xml);
    }
 
 }
