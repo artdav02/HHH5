@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="test">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/itc_algorithms-h5-55357e65da5a/test/junit-4.13.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/itc_algorithms-h5-55357e65da5a/test/hamcrest-core-1.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
